@@ -1,103 +1,124 @@
-import Image from 'next/image'
+'use client'
+
+import { useState, useCallback } from 'react'
+
+import { ProductCard } from '@/components'
+export interface ProductSize {
+	id: string
+	name: string
+	price: number
+	available: boolean
+}
+
+export interface Product {
+	id: string
+	name: string
+	image: string
+	sizes: ProductSize[]
+	description: string
+}
+
+export interface CartItem {
+	productId: string
+	sizeId: string
+	quantity: number
+	price: number
+}
+
+const products: Product[] = [
+	{
+		id: '1',
+		name: 'Orange Juice',
+		description: 'freshly fucked up squeezed',
+		image: '/placeholder.svg?height=80&width=80',
+		sizes: [
+			{ id: 'small', name: 'Small', price: 1.5, available: true },
+			{ id: 'medium', name: 'Medium', price: 2.0, available: true },
+			{ id: 'large', name: 'Large', price: 3.0, available: true },
+			{ id: 'bottle', name: 'Bottle', price: 5.0, available: false },
+		],
+	},
+	{
+		id: '2',
+		name: 'Orange Smoothie',
+		description: 'Made with orange and milk',
+		image: '/placeholder.svg?height=80&width=80',
+		sizes: [
+			{ id: 'small', name: 'Small', price: 2.0, available: true },
+			{ id: 'medium', name: 'Medium', price: 3.0, available: true },
+			{ id: 'large', name: 'Large', price: 4.0, available: true },
+			{ id: 'bottle', name: 'Bottle', price: 6.0, available: true },
+		],
+	},
+]
 
 export default function Home() {
-	return (
-		<div className="grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-[family-name:var(--font-geist-sans)] sm:p-20">
-			<main className="row-start-2 flex flex-col items-center gap-[32px] sm:items-start">
-				<Image
-					priority
-					alt="Next.js logo"
-					className="dark:invert"
-					height={38}
-					src="/next.svg"
-					width={180}
-				/>
-				<ol className="list-inside list-decimal text-center font-[family-name:var(--font-geist-mono)] text-sm/6 sm:text-left">
-					<li className="mb-2 tracking-[-.01em]">
-						Get started by editing{' '}
-						<code className="rounded bg-black/[.05] px-1 py-0.5 font-[family-name:var(--font-geist-mono)] font-semibold dark:bg-white/[.06]">
-							src/app/page.tsx
-						</code>
-						.
-					</li>
-					<li className="tracking-[-.01em]">
-						Save and see your changes instantly.
-					</li>
-				</ol>
+	const [cartItems, setCartItems] = useState<Record<string, CartItem>>({})
 
-				<div className="flex flex-col items-center gap-4 sm:flex-row">
-					<a
-						className="bg-foreground text-background flex h-10 items-center justify-center gap-2 rounded-full border border-solid border-transparent px-4 text-sm font-medium transition-colors hover:bg-[#383838] sm:h-12 sm:w-auto sm:px-5 sm:text-base dark:hover:bg-[#ccc]"
-						href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-						rel="noopener noreferrer"
-						target="_blank"
-					>
-						<Image
-							alt="Vercel logomark"
-							className="dark:invert"
-							height={20}
-							src="/vercel.svg"
-							width={20}
-						/>
-						Deploy now
-					</a>
-					<a
-						className="flex h-10 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-4 text-sm font-medium transition-colors hover:border-transparent hover:bg-[#f2f2f2] sm:h-12 sm:w-auto sm:px-5 sm:text-base md:w-[158px] dark:border-white/[.145] dark:hover:bg-[#1a1a1a]"
-						href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-						rel="noopener noreferrer"
-						target="_blank"
-					>
-						Read our docs
-					</a>
+	const updateCartItem = useCallback(
+		(productId: string, size: ProductSize, quantity: number) => {
+			const key = `${productId}-${size.id}`
+
+			setCartItems((prev) => {
+				if (quantity <= 0) {
+					const { [key]: removed, ...rest } = prev
+
+					return rest
+				}
+
+				return {
+					...prev,
+					[key]: {
+						productId,
+						sizeId: size.id,
+						quantity,
+						price: size.price,
+					},
+				}
+			})
+		},
+		[]
+	)
+
+	// Calculate total quantity and total price
+	const { totalItems, totalPrice } = Object.values(cartItems).reduce(
+		(acc, item) => {
+			acc.totalItems += item.quantity
+			acc.totalPrice += item.quantity * item.price
+
+			return acc
+		},
+		{ totalItems: 0, totalPrice: 0 }
+	)
+
+	return (
+		<div>
+			{products.map((product) => (
+				<ProductCard
+					key={product.id}
+					cartItems={cartItems}
+					product={product}
+					onUpdateCartItem={updateCartItem}
+				/>
+			))}
+
+			{/* Checkout Section */}
+			<div className="fixed right-4 bottom-4 flex items-center justify-between gap-4 rounded-xl border bg-white p-4 shadow-lg">
+				<div>
+					<div className="text-sm font-semibold">
+						{totalItems} item{totalItems !== 1 && 's'}
+					</div>
+					<div className="text-xl font-bold text-gray-800">
+						Total: ${totalPrice.toFixed(2)}
+					</div>
 				</div>
-			</main>
-			<footer className="row-start-3 flex flex-wrap items-center justify-center gap-[24px]">
-				<a
-					className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-					href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-					rel="noopener noreferrer"
-					target="_blank"
+				<button
+					className="btn btn-sm rounded-full bg-black px-4 text-white hover:bg-gray-800 disabled:opacity-50"
+					disabled={totalItems === 0}
 				>
-					<Image
-						aria-hidden
-						alt="File icon"
-						height={16}
-						src="/file.svg"
-						width={16}
-					/>
-					Learn
-				</a>
-				<a
-					className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-					href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-					rel="noopener noreferrer"
-					target="_blank"
-				>
-					<Image
-						aria-hidden
-						alt="Window icon"
-						height={16}
-						src="/window.svg"
-						width={16}
-					/>
-					Examples
-				</a>
-				<a
-					className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-					href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-					rel="noopener noreferrer"
-					target="_blank"
-				>
-					<Image
-						aria-hidden
-						alt="Globe icon"
-						height={16}
-						src="/globe.svg"
-						width={16}
-					/>
-					Go to nextjs.org →
-				</a>
-			</footer>
+					Checkout
+				</button>
+			</div>
 		</div>
 	)
 }
