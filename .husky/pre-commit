@@ -75,7 +75,12 @@ analyze_output() {
   
   case "$check_type" in
     "i18n")
-      error_count=$(grep -i "error\|missing\|invalid" "$log_file" | wc -l)
+      # Look for actual error patterns, exclude success messages
+      error_count=$(grep -i "error" "$log_file" | grep -v -i "no.*error\|0.*error" | wc -l)
+      # Count actual missing/invalid items (numbers > 0)
+      local missing_count=$(grep -E "[0-9]+ missing keys?" "$log_file" | grep -v "0 missing" | wc -l)
+      local invalid_count=$(grep -E "[0-9]+ invalid translations?" "$log_file" | grep -v "0 invalid" | wc -l)
+      error_count=$((error_count + missing_count + invalid_count))
       warning_count=$(grep -i "warning\|deprecated" "$log_file" | wc -l)
       ;;
     "types")
@@ -88,8 +93,18 @@ analyze_output() {
       ;;
   esac
 
+  # Check for explicit success indicators
+  local success_indicators=0
+  case "$check_type" in
+    "i18n")
+      success_indicators=$(grep -i "no missing keys\|no invalid translations\|done in" "$log_file" | wc -l)
+      ;;
+  esac
+
   if [ "$line_count" -eq 0 ]; then
     echo -e "  ${green}✨ Clean output - no issues detected${clear}"
+  elif [ "$success_indicators" -gt 0 ] && [ "$error_count" -eq 0 ]; then
+    echo -e "  ${green}✨ All checks passed - no issues found${clear}"
   elif [ "$error_count" -gt 0 ]; then
     echo -e "  ${red}🚨 ${error_count} error(s) found${clear}"
     if [ "$warning_count" -gt 0 ]; then
