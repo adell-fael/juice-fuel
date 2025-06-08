@@ -1,0 +1,1 @@
+export { getUserLocale } from './locale'

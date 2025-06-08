@@ -1,0 +1,1 @@
+export const COOKIE_LOCALE = 'NEXT_LOCALE'
