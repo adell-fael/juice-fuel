@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
 
 import { ProductCard } from '@/components'
 export interface ProductSize {
@@ -53,6 +54,7 @@ const products: Product[] = [
 ]
 
 export default function Home() {
+	const t = useTranslations('header')
 	const [cartItems, setCartItems] = useState<Record<string, CartItem>>({})
 
 	const updateCartItem = useCallback(
@@ -93,6 +95,15 @@ export default function Home() {
 
 	return (
 		<div>
+			<header>
+				<nav>
+					{t('logo')}
+
+					<ul>
+						<li>{t('nav.home')}</li>
+					</ul>
+				</nav>
+			</header>
 			{products.map((product) => (
 				<ProductCard
 					key={product.id}

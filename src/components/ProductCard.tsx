@@ -46,19 +46,21 @@ const ProductCard: FC<ProductCardProps> = ({
 		<div className="bg-base-200 collapse-arrow collapse my-2">
 			<input name="toggle-collapse" type="checkbox" />
 			{/* Product Header */}
-			<div className="collapse-title font-semibold">
-				<div className="flex gap-2">
-					<div className="aspect-square size-16 bg-gray-500" />
+			<div className="collapse-title font-medium">
+				<div className="flex gap-2 px-2">
+					<div className="aspect-square size-16 bg-gray-300" />
 
 					<div>
-						<span>{product.name}</span>
-						<div className="text-sm font-light">{product.description}</div>
+						<span className="text-sm md:text-lg">{product.name}</span>
+						<div className="text-xs font-light md:text-base">
+							{product.description}
+						</div>
 					</div>
 				</div>
 			</div>
 
 			{/* Expandable Content */}
-			<div className="collapse-content">
+			<div className="collapse-content text-sm md:text-base">
 				{product.sizes
 					.filter((s) => s.available)
 					.map((size) => {
@@ -71,8 +73,7 @@ const ProductCard: FC<ProductCardProps> = ({
 							<div
 								key={size.id}
 								className={cn(
-									'my-1 flex items-center gap-3 rounded-lg px-4 py-2 transition-colors',
-
+									'my-1 flex items-center gap-3 rounded-lg px-2 py-2 transition-colors',
 									!size.available && 'bg-base-200 opacity-50',
 									size.available && !isSelected && 'hover:bg-base-100',
 									size.available && isSelected && 'bg-base-300'
@@ -92,7 +93,7 @@ const ProductCard: FC<ProductCardProps> = ({
 									/>
 								</div>
 
-								<div className="flex flex-1 items-center justify-between">
+								<div className="flex flex-1 items-center justify-between gap-1">
 									<label
 										className={`font-medium ${!size.available ? 'text-base-content text-opacity-40' : ''}`}
 										htmlFor={key + 'checkbox'}
@@ -164,7 +165,7 @@ const ProductCard: FC<ProductCardProps> = ({
 											</>
 										)}
 
-										<span className="min-w-[4rem] text-right text-lg font-bold">
+										<span className="min-w-12 text-center font-bold">
 											${size.price.toFixed(2)}
 										</span>
 									</div>
