@@ -7,8 +7,7 @@ import { getLangDir } from 'rtl-detect'
 import { getLocale } from 'next-intl/server'
 import { NextIntlClientProvider } from 'next-intl'
 
-import { Toastify } from '@/_layouts'
-import { LangSwitch } from '@/components'
+import { MainWrapper } from '@/_layouts'
 
 const rubik = Rubik({
 	weight: ['300', '400', '500', '600', '700'],
@@ -30,11 +29,9 @@ export default async function RootLayout({
 
 	return (
 		<html dir={direction} lang={locale}>
-			<body className={`${rubik.className} flex h-screen flex-col`}>
+			<body className={`${rubik.className}`}>
 				<NextIntlClientProvider>
-					<LangSwitch />
-					{children}
-					<Toastify />
+					<MainWrapper>{children}</MainWrapper>
 				</NextIntlClientProvider>
 			</body>
 		</html>

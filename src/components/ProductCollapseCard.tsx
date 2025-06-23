@@ -3,19 +3,19 @@
 import { FC, useCallback } from 'react'
 
 import { cn } from '@/utils'
-import { CartItem, Product, ProductSize } from '@/app/page'
+import { CartItem, Product, ProductSize } from '@/types'
 
-interface ProductCardProps {
+interface ProductCollapseCardProps {
 	product: Product
 	cartItems: Record<string, CartItem>
 	onUpdateCartItem: (
-		productId: string,
+		product: Product,
 		size: ProductSize,
 		quantity: number
 	) => void
 }
 
-const ProductCard: FC<ProductCardProps> = ({
+const ProductCollapseCard: FC<ProductCollapseCardProps> = ({
 	product,
 	cartItems,
 	onUpdateCartItem,
@@ -26,20 +26,25 @@ const ProductCard: FC<ProductCardProps> = ({
 			const currentQuantity = cartItems[key]?.quantity || 0
 			const newQuantity = Math.max(0, currentQuantity + delta)
 
-			onUpdateCartItem(product.id, size, newQuantity)
+			onUpdateCartItem(product, size, newQuantity)
 		},
-		[product.id, cartItems, onUpdateCartItem]
+		[product, cartItems, onUpdateCartItem]
 	)
 
 	const toggleSizeSelection = useCallback(
 		(size: ProductSize, checked: boolean) => {
-			if (checked) {
-				onUpdateCartItem(product.id, size, 1)
-			} else {
-				onUpdateCartItem(product.id, size, 0)
-			}
+			const quantity = checked ? 1 : 0
+
+			onUpdateCartItem(product, size, quantity)
 		},
-		[product.id, onUpdateCartItem]
+		[product, onUpdateCartItem]
+	)
+
+	const handleProductChange = useCallback(
+		(product: Product, size: ProductSize, quantity: number) => {
+			onUpdateCartItem(product, size, quantity)
+		},
+		[onUpdateCartItem]
 	)
 
 	return (
@@ -134,10 +139,17 @@ const ProductCard: FC<ProductCardProps> = ({
 												</button>
 
 												<input
-													readOnly
+													// readOnly
 													aria-label={`${size.name} quantity`}
 													className="input input-bordered input-xs w-10 text-center"
 													value={quantity}
+													onChange={(e) =>
+														handleProductChange(
+															product,
+															size,
+															Number(e.target.value)
+														)
+													}
 												/>
 
 												<button
@@ -178,4 +190,4 @@ const ProductCard: FC<ProductCardProps> = ({
 	)
 }
 
-export default ProductCard
+export default ProductCollapseCard

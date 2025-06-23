@@ -1,4 +1,5 @@
-export { default as ProductCard } from './ProductCard'
+export { default as ProductCollapseCard } from './ProductCollapseCard'
 export { default as Loader } from './Loader'
 export { default as LangSwitch } from './LangSwitch'
 export { default as ScrollToTop } from './ScrollToTop'
+export { default as Navbar } from './Navbar'
