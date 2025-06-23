@@ -3,6 +3,8 @@
 import { useTranslations } from 'next-intl'
 import React from 'react'
 
+import CartDrawer from './CartDrawer'
+
 import { LangSwitch } from '.'
 
 const Navbar = () => {
@@ -77,7 +79,11 @@ const Navbar = () => {
 					</li>
 				</ul>
 			</div>
-			<div className="navbar-end">
+			<div className="navbar-end gap-2">
+				<div>
+					<CartDrawer />
+				</div>
+
 				<LangSwitch />
 			</div>
 		</nav>

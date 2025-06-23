@@ -1,2 +1,2 @@
-export type { CartItem } from './Cart'
+export type { CartItem, CartState } from './Cart'
 export type { Product, ProductSize } from './Product'

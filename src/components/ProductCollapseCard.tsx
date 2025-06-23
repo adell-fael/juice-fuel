@@ -3,48 +3,30 @@
 import { FC, useCallback } from 'react'
 
 import { cn } from '@/utils'
-import { CartItem, Product, ProductSize } from '@/types'
+import { Product, ProductSize } from '@/types'
+import { useCartStore } from '@/stores'
 
 interface ProductCollapseCardProps {
 	product: Product
-	cartItems: Record<string, CartItem>
-	onUpdateCartItem: (
-		product: Product,
-		size: ProductSize,
-		quantity: number
-	) => void
 }
 
-const ProductCollapseCard: FC<ProductCollapseCardProps> = ({
-	product,
-	cartItems,
-	onUpdateCartItem,
-}) => {
-	const adjustQuantity = useCallback(
-		(size: ProductSize, delta: number) => {
-			const key = `${product.id}-${size.id}`
-			const currentQuantity = cartItems[key]?.quantity || 0
-			const newQuantity = Math.max(0, currentQuantity + delta)
-
-			onUpdateCartItem(product, size, newQuantity)
-		},
-		[product, cartItems, onUpdateCartItem]
-	)
+const ProductCollapseCard: FC<ProductCollapseCardProps> = ({ product }) => {
+	const { cartItems, updateCartItem, adjustItemQuantity } = useCartStore()
 
 	const toggleSizeSelection = useCallback(
 		(size: ProductSize, checked: boolean) => {
 			const quantity = checked ? 1 : 0
 
-			onUpdateCartItem(product, size, quantity)
+			updateCartItem(product, size, quantity)
 		},
-		[product, onUpdateCartItem]
+		[product, updateCartItem]
 	)
 
 	const handleProductChange = useCallback(
 		(product: Product, size: ProductSize, quantity: number) => {
-			onUpdateCartItem(product, size, quantity)
+			updateCartItem(product, size, quantity)
 		},
-		[onUpdateCartItem]
+		[updateCartItem]
 	)
 
 	return (
@@ -69,8 +51,11 @@ const ProductCollapseCard: FC<ProductCollapseCardProps> = ({
 				{product.sizes
 					.filter((s) => s.available)
 					.map((size) => {
-						const key = `${product.id}-${size.id}`
-						const cartItem = cartItems[key]
+						const cartItem = cartItems.find(
+							(item) =>
+								item.product.id === product.id && item.size.id === size.id
+						)
+
 						const isSelected = Boolean(cartItem && cartItem.quantity > 0)
 						const quantity = cartItem?.quantity || 0
 
@@ -89,7 +74,7 @@ const ProductCollapseCard: FC<ProductCollapseCardProps> = ({
 										checked={isSelected}
 										className="checkbox checkbox-primary"
 										disabled={!size.available}
-										id={key + 'checkbox'}
+										id={`${product.id}-${size.id}-checkbox`}
 										type="checkbox"
 										onChange={(e) => {
 											e.stopPropagation()
@@ -101,7 +86,7 @@ const ProductCollapseCard: FC<ProductCollapseCardProps> = ({
 								<div className="flex flex-1 items-center justify-between gap-1">
 									<label
 										className={`font-medium ${!size.available ? 'text-base-content text-opacity-40' : ''}`}
-										htmlFor={key + 'checkbox'}
+										htmlFor={`${product.id}-${size.id}-checkbox`}
 									>
 										{size.name}
 										{!size.available && (
@@ -120,7 +105,7 @@ const ProductCollapseCard: FC<ProductCollapseCardProps> = ({
 													disabled={quantity <= 0}
 													onClick={(e) => {
 														e.stopPropagation()
-														adjustQuantity(size, -1)
+														adjustItemQuantity(product, size, -1)
 													}}
 												>
 													<svg
@@ -139,7 +124,6 @@ const ProductCollapseCard: FC<ProductCollapseCardProps> = ({
 												</button>
 
 												<input
-													// readOnly
 													aria-label={`${size.name} quantity`}
 													className="input input-bordered input-xs w-10 text-center"
 													value={quantity}
@@ -157,7 +141,7 @@ const ProductCollapseCard: FC<ProductCollapseCardProps> = ({
 													className="btn btn-circle btn-outline btn-xs"
 													onClick={(e) => {
 														e.stopPropagation()
-														adjustQuantity(size, 1)
+														adjustItemQuantity(product, size, 1)
 													}}
 												>
 													<svg
