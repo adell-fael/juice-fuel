@@ -105,7 +105,17 @@ run_check() {
 }
 
 # Banner
-echo -e "${green}🚀 JuiceFuel Pre-commit Checks${clear}"
+# echo -e "${green}🚀 JuiceFuel Pre-commit Checks${clear}"
+echo -e "
+${cyan}
+    _      ____   _____   _       
+   / \    |  _ \ | ____| | |      
+  / _ \   | | | ||  _|   | |      
+ / ___ \ _| |_| || |___ _| |___ _ 
+/_/   \_(_)____(_)_____(_)_____(_)
+
+${clear}
+"
 echo -e "${cyan}Using: ${PKG_MGR} | $(date)${clear}\n"
 
 # Run checks
