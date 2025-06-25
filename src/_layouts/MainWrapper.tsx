@@ -1,6 +1,6 @@
 import React, { FC, ReactNode } from 'react'
 
-import { Navbar } from '@/components'
+import { Navbar, ScrollToTop } from '@/components'
 
 import { Toastify } from '.'
 
@@ -10,7 +10,7 @@ type MainWrapperProps = {
 
 const MainWrapper: FC<MainWrapperProps> = ({ children }) => {
 	return (
-		<div className="flex h-screen flex-col">
+		<div className="relative flex h-screen flex-col">
 			<header>
 				<Navbar />
 			</header>
@@ -19,6 +19,7 @@ const MainWrapper: FC<MainWrapperProps> = ({ children }) => {
 			<footer>Footer goes here</footer>
 
 			<Toastify />
+			<ScrollToTop />
 		</div>
 	)
 }

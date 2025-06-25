@@ -3,9 +3,7 @@
 import { useTranslations } from 'next-intl'
 import React from 'react'
 
-import CartDrawer from './CartDrawer'
-
-import { LangSwitch } from '.'
+import { LangSwitch, CartDrawer } from '.'
 
 const Navbar = () => {
 	const t = useTranslations('header')

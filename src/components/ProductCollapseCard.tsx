@@ -6,12 +6,14 @@ import { cn } from '@/utils'
 import { Product, ProductSize } from '@/types'
 import { useCartStore } from '@/stores'
 
+import { QuantityControls } from '.'
+
 interface ProductCollapseCardProps {
 	product: Product
 }
 
 const ProductCollapseCard: FC<ProductCollapseCardProps> = ({ product }) => {
-	const { cartItems, updateCartItem, adjustItemQuantity } = useCartStore()
+	const { cartItems, updateCartItem } = useCartStore()
 
 	const toggleSizeSelection = useCallback(
 		(size: ProductSize, checked: boolean) => {
@@ -20,13 +22,6 @@ const ProductCollapseCard: FC<ProductCollapseCardProps> = ({ product }) => {
 			updateCartItem(product, size, quantity)
 		},
 		[product, updateCartItem]
-	)
-
-	const handleProductChange = useCallback(
-		(product: Product, size: ProductSize, quantity: number) => {
-			updateCartItem(product, size, quantity)
-		},
-		[updateCartItem]
 	)
 
 	return (
@@ -98,67 +93,11 @@ const ProductCollapseCard: FC<ProductCollapseCardProps> = ({ product }) => {
 
 									<div className="flex items-center gap-2">
 										{size.available && (
-											<>
-												<button
-													aria-label={`Decrease ${size.name} quantity`}
-													className="btn btn-circle btn-outline btn-xs"
-													disabled={quantity <= 0}
-													onClick={(e) => {
-														e.stopPropagation()
-														adjustItemQuantity(product, size, -1)
-													}}
-												>
-													<svg
-														className="h-3 w-3"
-														fill="none"
-														stroke="currentColor"
-														viewBox="0 0 24 24"
-													>
-														<path
-															d="M20 12H4"
-															strokeLinecap="round"
-															strokeLinejoin="round"
-															strokeWidth={2}
-														/>
-													</svg>
-												</button>
-
-												<input
-													aria-label={`${size.name} quantity`}
-													className="input input-bordered input-xs w-10 text-center"
-													value={quantity}
-													onChange={(e) =>
-														handleProductChange(
-															product,
-															size,
-															Number(e.target.value)
-														)
-													}
-												/>
-
-												<button
-													aria-label={`Increase ${size.name} quantity`}
-													className="btn btn-circle btn-outline btn-xs"
-													onClick={(e) => {
-														e.stopPropagation()
-														adjustItemQuantity(product, size, 1)
-													}}
-												>
-													<svg
-														className="h-3 w-3"
-														fill="none"
-														stroke="currentColor"
-														viewBox="0 0 24 24"
-													>
-														<path
-															d="M12 4v16m8-8H4"
-															strokeLinecap="round"
-															strokeLinejoin="round"
-															strokeWidth={2}
-														/>
-													</svg>
-												</button>
-											</>
+											<QuantityControls
+												product={product}
+												quantity={quantity}
+												size={size}
+											/>
 										)}
 
 										<span className="min-w-12 text-center font-bold">

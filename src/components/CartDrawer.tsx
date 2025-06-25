@@ -1,20 +1,42 @@
 'use client'
-import { ShoppingCart, Trash2, X } from 'lucide-react'
-import React from 'react'
+import { ShoppingBag, Trash2, X } from 'lucide-react'
+import React, { useEffect, useState } from 'react'
 
 import { useCartStore } from '@/stores'
+
+import { QuantityControls } from '.'
 
 const CartDrawer = () => {
 	const { cartItems, removeProductSizeFromCart, totalItems, totalPrice } =
 		useCartStore()
 
+	const [isOpen, setIsOpen] = useState(false)
+
+	useEffect(() => {
+		const handleEscape = (e: KeyboardEvent) => {
+			if (e.key === 'Escape' && isOpen) {
+				setIsOpen(false)
+			}
+		}
+
+		document.addEventListener('keydown', handleEscape)
+
+		return () => document.removeEventListener('keydown', handleEscape)
+	}, [isOpen, setIsOpen])
+
 	return (
 		<div className="drawer drawer-end">
-			<input className="drawer-toggle" id="cart-drawer" type="checkbox" />
+			<input
+				checked={isOpen}
+				className="drawer-toggle"
+				id="cart-drawer"
+				type="checkbox"
+				onChange={(e) => setIsOpen(e.target.checked)}
+			/>
 			<div className="drawer-content">
 				{/* Cart Button */}
 				<label className="drawer-button btn relative" htmlFor="cart-drawer">
-					<ShoppingCart className="h-5 w-5" />
+					<ShoppingBag className="size-5" />
 					{totalItems > 0 && (
 						<div className="badge badge-secondary badge-sm absolute -top-2 -right-2">
 							{totalItems}
@@ -30,7 +52,7 @@ const CartDrawer = () => {
 				/>
 				<div className="bg-base-100 flex min-h-full w-full flex-col md:max-w-sm">
 					{/* Header */}
-					<div className="bg-base-300 text-base-content flex items-center justify-between p-4">
+					<div className="bg-secondary text-secondary-content flex items-center justify-between p-4">
 						<div className="flex items-center gap-3">
 							<div>
 								<h2 className="text-xl font-bold">
@@ -41,7 +63,7 @@ const CartDrawer = () => {
 								</p>
 							</div>
 						</div>
-						<label className="btn btn-sm btn-circle" htmlFor="cart-drawer">
+						<label className="btn btn-sm btn-ghost" htmlFor="cart-drawer">
 							<X className="h-4 w-4" />
 						</label>
 					</div>
@@ -51,12 +73,12 @@ const CartDrawer = () => {
 						{Object.keys(cartItems).length === 0 ? (
 							/* Empty Cart State */
 							<div className="flex h-full flex-col items-center justify-center py-8 text-center">
-								<ShoppingCart className="text-base-content/30 mb-4 h-16 w-16" />
+								<ShoppingBag className="text-base-content/30 mb-4 size-16" />
 								<h3 className="text-base-content/70 mb-2 text-lg font-semibold">
-									Your cart is empty
+									Your order is empty
 								</h3>
 								<p className="text-base-content/50 text-sm">
-									Add some items to get started!
+									Add some delicious drinks to get started!
 								</p>
 							</div>
 						) : (
@@ -94,7 +116,7 @@ const CartDrawer = () => {
 
 													<button
 														aria-label={`Remove ${item.product.name} from cart`}
-														className="btn btn-ghost btn-xs text-error hover:bg-error hover:text-error-content"
+														className="btn btn-ghost btn-xs btn-error"
 														onClick={() =>
 															removeProductSizeFromCart(
 																item.product.id,
@@ -108,13 +130,17 @@ const CartDrawer = () => {
 
 												{/* Size and Quantity */}
 												<div className="mt-1 flex flex-wrap gap-2">
-													<span className="badge badge-outline badge-xs">
+													<span className="badge badge-accent badge-xs font-semibold">
 														Size: {item.size.name}
 													</span>
-													<span className="badge badge-primary badge-xs">
-														Qty: {item.quantity}
-													</span>
 												</div>
+
+												<QuantityControls
+													className="mt-2"
+													product={item.product}
+													quantity={item.quantity}
+													size={item.size}
+												/>
 
 												{/* Pricing */}
 												<div className="mt-2 flex flex-wrap items-center justify-between">
@@ -136,7 +162,7 @@ const CartDrawer = () => {
 					{/* Footer - Checkout Button */}
 					{Object.keys(cartItems).length > 0 && (
 						<div className="border-base-300 border-t p-4">
-							<button className="btn btn-primary w-full">
+							<button className="btn btn-secondary w-full">
 								Proceed to Checkout
 							</button>
 						</div>
