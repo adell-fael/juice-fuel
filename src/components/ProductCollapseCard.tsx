@@ -25,7 +25,7 @@ const ProductCollapseCard: FC<ProductCollapseCardProps> = ({ product }) => {
 	)
 
 	return (
-		<div className="bg-base-200 collapse-arrow collapse my-2">
+		<div className="bg-base-300 text-base-content collapse-arrow collapse my-2">
 			<input name="toggle-collapse" type="checkbox" />
 			{/* Product Header */}
 			<div className="collapse-title font-medium">
@@ -33,8 +33,10 @@ const ProductCollapseCard: FC<ProductCollapseCardProps> = ({ product }) => {
 					<div className="aspect-square size-16 bg-gray-300" />
 
 					<div>
-						<span className="text-sm md:text-lg">{product.name}</span>
-						<div className="text-xs font-light md:text-base">
+						<span className="text-primary-content text-sm md:text-lg">
+							{product.name}
+						</span>
+						<div className="text-secondary-content text-xs font-light md:text-base">
 							{product.description}
 						</div>
 					</div>
@@ -80,7 +82,10 @@ const ProductCollapseCard: FC<ProductCollapseCardProps> = ({ product }) => {
 
 								<div className="flex flex-1 items-center justify-between gap-1">
 									<label
-										className={`font-medium ${!size.available ? 'text-base-content text-opacity-40' : ''}`}
+										className={cn(
+											`font-medium`,
+											!size.available && 'opacity-40'
+										)}
 										htmlFor={`${product.id}-${size.id}-checkbox`}
 									>
 										{size.name}

@@ -1,6 +1,6 @@
 import React, { FC, ReactNode } from 'react'
 
-import { Navbar, ScrollToTop } from '@/components'
+import { Footer, Navbar, ScrollToTop } from '@/components'
 
 import { Toastify } from '.'
 
@@ -16,7 +16,7 @@ const MainWrapper: FC<MainWrapperProps> = ({ children }) => {
 			</header>
 			<main>{children}</main>
 
-			<footer>Footer goes here</footer>
+			<Footer />
 
 			<Toastify />
 			<ScrollToTop />

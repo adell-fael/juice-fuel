@@ -1,8 +1,8 @@
 @import 'tailwindcss';
 @plugin "daisyui" {
 	themes:
-		winter --default,
-		nord --prefersdark;
+		nord --default,
+		lemonade --prefersdark;
 }
 
 @utility no-controls {

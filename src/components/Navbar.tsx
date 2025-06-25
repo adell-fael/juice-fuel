@@ -9,7 +9,7 @@ const Navbar = () => {
 	const t = useTranslations('header')
 
 	return (
-		<nav className="navbar bg-base-100 shadow-sm">
+		<nav className="navbar bg-base-100 text-base-content shadow-sm">
 			<div className="navbar-start">
 				<div className="dropdown">
 					<div className="btn btn-ghost lg:hidden" role="button" tabIndex={0}>
@@ -30,7 +30,7 @@ const Navbar = () => {
 						</svg>
 					</div>
 					<ul
-						className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+						className="menu menu-sm dropdown-content rounded-box mt-3 w-52 p-2 shadow"
 						tabIndex={0}
 					>
 						<li>
@@ -52,7 +52,7 @@ const Navbar = () => {
 						</li>
 					</ul>
 				</div>
-				<a className="btn btn-ghost text-xl">daisyUI</a>
+				<a className="btn btn-ghost text-xl">Logo</a>
 			</div>
 			<div className="navbar-center hidden lg:flex">
 				<ul className="menu menu-horizontal px-1">
@@ -62,7 +62,7 @@ const Navbar = () => {
 					<li>
 						<details>
 							<summary>Parent</summary>
-							<ul className="p-2">
+							<ul className="z-10 p-2">
 								<li>
 									<a>Submenu 1</a>
 								</li>

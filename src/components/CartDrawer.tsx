@@ -35,7 +35,10 @@ const CartDrawer = () => {
 			/>
 			<div className="drawer-content">
 				{/* Cart Button */}
-				<label className="drawer-button btn relative" htmlFor="cart-drawer">
+				<label
+					className="drawer-button btn btn-ghost relative"
+					htmlFor="cart-drawer"
+				>
 					<ShoppingBag className="size-5" />
 					{totalItems > 0 && (
 						<div className="badge badge-secondary badge-sm absolute -top-2 -right-2">

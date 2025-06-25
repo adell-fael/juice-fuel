@@ -43,7 +43,7 @@ const LangSwitch: FC = () => {
 				<div className="fixed inset-0 z-[9999] h-full w-full cursor-progress bg-transparent" />
 			)}
 
-			<label className="swap swap-rotate btn">
+			<label className="swap swap-rotate btn btn-ghost">
 				<input
 					checked={isArabic}
 					type="checkbox"
