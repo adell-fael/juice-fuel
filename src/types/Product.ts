@@ -11,4 +11,6 @@ export interface Product {
 	image: string
 	sizes: ProductSize[]
 	description: string
+	category: string
+	bestSelling: boolean
 }

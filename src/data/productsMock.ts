@@ -6,6 +6,8 @@ export const products: Product[] = [
 		name: 'Strawberry Smoothie',
 		description: 'Creamy blend of strawberries and yogurt',
 		image: '',
+		category: 'Smoothie',
+		bestSelling: true,
 		sizes: [
 			{ id: 'small', name: 'Small', price: 2.5, available: true },
 			{ id: 'medium', name: 'Medium', price: 3.5, available: true },
@@ -18,6 +20,8 @@ export const products: Product[] = [
 		name: 'Mango Juice',
 		description: 'Freshly squeezed ripe mangoes',
 		image: '',
+		category: 'Juice',
+		bestSelling: true,
 		sizes: [
 			{ id: 'small', name: 'Small', price: 1.8, available: true },
 			{ id: 'medium', name: 'Medium', price: 2.8, available: true },
@@ -30,6 +34,8 @@ export const products: Product[] = [
 		name: 'Avocado Shake',
 		description: 'Rich and creamy avocado blended with milk',
 		image: '',
+		category: 'Shake',
+		bestSelling: false,
 		sizes: [
 			{ id: 'small', name: 'Small', price: 3.0, available: true },
 			{ id: 'medium', name: 'Medium', price: 4.0, available: true },
@@ -42,6 +48,8 @@ export const products: Product[] = [
 		name: 'Lemon Iced Tea',
 		description: 'Refreshing black tea with lemon and ice',
 		image: '',
+		category: 'Tea',
+		bestSelling: false,
 		sizes: [
 			{ id: 'small', name: 'Small', price: 1.2, available: true },
 			{ id: 'medium', name: 'Medium', price: 1.7, available: true },
@@ -54,6 +62,8 @@ export const products: Product[] = [
 		name: 'Banana Protein Shake',
 		description: 'Packed with protein and banana flavor',
 		image: '',
+		category: 'Shake',
+		bestSelling: true,
 		sizes: [
 			{ id: 'small', name: 'Small', price: 2.8, available: true },
 			{ id: 'medium', name: 'Medium', price: 3.8, available: true },
@@ -66,6 +76,8 @@ export const products: Product[] = [
 		name: 'Carrot Apple Juice',
 		description: 'Cold-pressed juice with carrots and apples',
 		image: '',
+		category: 'Juice',
+		bestSelling: false,
 		sizes: [
 			{ id: 'small', name: 'Small', price: 2.0, available: true },
 			{ id: 'medium', name: 'Medium', price: 3.0, available: false },
@@ -78,6 +90,8 @@ export const products: Product[] = [
 		name: 'Berry Mix Juice',
 		description: 'Tangy mix of blueberries, raspberries, and strawberries',
 		image: '',
+		category: 'Juice',
+		bestSelling: false,
 		sizes: [
 			{ id: 'small', name: 'Small', price: 2.7, available: true },
 			{ id: 'medium', name: 'Medium', price: 3.7, available: true },
@@ -90,6 +104,8 @@ export const products: Product[] = [
 		name: 'Pineapple Cooler',
 		description: 'Chilled pineapple juice with a mint twist',
 		image: '',
+		category: 'Juice',
+		bestSelling: true,
 		sizes: [
 			{ id: 'small', name: 'Small', price: 1.9, available: true },
 			{ id: 'medium', name: 'Medium', price: 2.9, available: true },
@@ -102,6 +118,8 @@ export const products: Product[] = [
 		name: 'Peach Iced Tea',
 		description: 'Black tea with fresh peach flavor',
 		image: '',
+		category: 'Tea',
+		bestSelling: false,
 		sizes: [
 			{ id: 'small', name: 'Small', price: 1.4, available: true },
 			{ id: 'medium', name: 'Medium', price: 2.4, available: true },
@@ -114,6 +132,8 @@ export const products: Product[] = [
 		name: 'Watermelon Juice',
 		description: 'Chilled watermelon juice with a pinch of lime',
 		image: '',
+		category: 'Juice',
+		bestSelling: true,
 		sizes: [
 			{ id: 'small', name: 'Small', price: 2.1, available: true },
 			{ id: 'medium', name: 'Medium', price: 3.1, available: true },
@@ -126,6 +146,8 @@ export const products: Product[] = [
 		name: 'Kiwi Punch',
 		description: 'Zesty kiwi drink for a refreshing kick',
 		image: '',
+		category: 'Juice',
+		bestSelling: false,
 		sizes: [
 			{ id: 'small', name: 'Small', price: 2.6, available: true },
 			{ id: 'medium', name: 'Medium', price: 3.6, available: true },
@@ -138,6 +160,8 @@ export const products: Product[] = [
 		name: 'Coconut Water',
 		description: 'Pure, natural coconut water',
 		image: '',
+		category: 'Water',
+		bestSelling: false,
 		sizes: [
 			{ id: 'small', name: 'Small', price: 1.5, available: true },
 			{ id: 'medium', name: 'Medium', price: 2.5, available: true },
@@ -150,6 +174,8 @@ export const products: Product[] = [
 		name: 'Mint Lemonade',
 		description: 'Lemonade with fresh mint leaves',
 		image: '',
+		category: 'Lemonade',
+		bestSelling: false,
 		sizes: [
 			{ id: 'small', name: 'Small', price: 1.3, available: true },
 			{ id: 'medium', name: 'Medium', price: 2.3, available: true },
@@ -162,6 +188,8 @@ export const products: Product[] = [
 		name: 'Chocolate Milkshake',
 		description: 'Thick chocolate shake with cocoa drizzle',
 		image: '',
+		category: 'Shake',
+		bestSelling: true,
 		sizes: [
 			{ id: 'small', name: 'Small', price: 2.9, available: true },
 			{ id: 'medium', name: 'Medium', price: 3.9, available: true },
@@ -174,6 +202,8 @@ export const products: Product[] = [
 		name: 'Espresso Frappe',
 		description: 'Cold espresso blended with ice and milk',
 		image: '',
+		category: 'Coffee',
+		bestSelling: false,
 		sizes: [
 			{ id: 'small', name: 'Small', price: 2.3, available: true },
 			{ id: 'medium', name: 'Medium', price: 3.3, available: true },
@@ -186,6 +216,8 @@ export const products: Product[] = [
 		name: 'Apple Cider',
 		description: 'Chilled sparkling apple cider',
 		image: '',
+		category: 'Cider',
+		bestSelling: false,
 		sizes: [
 			{ id: 'small', name: 'Small', price: 2.2, available: true },
 			{ id: 'medium', name: 'Medium', price: 3.2, available: true },
@@ -198,6 +230,8 @@ export const products: Product[] = [
 		name: 'Tropical Blast',
 		description: 'Blend of exotic fruits in a chilled punch',
 		image: '',
+		category: 'Punch',
+		bestSelling: false,
 		sizes: [
 			{ id: 'small', name: 'Small', price: 2.0, available: true },
 			{ id: 'medium', name: 'Medium', price: 3.0, available: true },
@@ -210,6 +244,8 @@ export const products: Product[] = [
 		name: 'Honeydew Cooler',
 		description: 'Sweet honeydew melon blended with ice',
 		image: '',
+		category: 'Cooler',
+		bestSelling: false,
 		sizes: [
 			{ id: 'small', name: 'Small', price: 2.4, available: true },
 			{ id: 'medium', name: 'Medium', price: 3.4, available: false },
@@ -222,6 +258,8 @@ export const products: Product[] = [
 		name: 'Ginger Lemon Shot',
 		description: 'Strong ginger-lemon immunity booster',
 		image: '',
+		category: 'Shot',
+		bestSelling: false,
 		sizes: [
 			{ id: 'small', name: 'Small', price: 1.1, available: true },
 			{ id: 'medium', name: 'Medium', price: 2.1, available: true },
@@ -234,6 +272,8 @@ export const products: Product[] = [
 		name: 'Matcha Latte',
 		description: 'Green tea latte with a creamy texture',
 		image: '',
+		category: 'Latte',
+		bestSelling: false,
 		sizes: [
 			{ id: 'small', name: 'Small', price: 2.6, available: true },
 			{ id: 'medium', name: 'Medium', price: 3.6, available: true },

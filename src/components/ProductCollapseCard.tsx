@@ -30,7 +30,7 @@ const ProductCollapseCard: FC<ProductCollapseCardProps> = ({ product }) => {
 			{/* Product Header */}
 			<div className="collapse-title font-medium">
 				<div className="flex gap-2 px-2">
-					<div className="aspect-square size-16 rounded-lg bg-gray-500" />
+					<div className="aspect-square size-24 rounded-lg bg-gray-500" />
 
 					<div>
 						<span className="text-primary-content text-sm md:text-lg">
@@ -38,6 +38,9 @@ const ProductCollapseCard: FC<ProductCollapseCardProps> = ({ product }) => {
 						</span>
 						<div className="text-secondary-content text-xs font-light md:text-base">
 							{product.description}
+						</div>
+						<div className="badge badge-soft badge-primary badge-xs md:badge-sm">
+							#{product.category}
 						</div>
 					</div>
 				</div>
